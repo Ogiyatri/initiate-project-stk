@@ -3,16 +3,16 @@ import {
   ConflictException,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { comparePassword, hashPassword } from '@/common/hash/password';
-import { JwtTokenService } from '@/common/jwt/jwt-token.service';
-import RegisterRequest from '@/auth/application/rest/request/register.request';
-import LoginRequest from '@/auth/application/rest/request/login.request';
-import UserRepository from '@/auth/infrastructure/repository/user/user.repository';
-import { UserEntity } from '@/auth/infrastructure/repository/user/user.entity';
-import { UserRole } from '@/auth/domain/types/user-role.enum';
-import { UserStatus } from '@/auth/domain/types/user-status.enum';
-import awaitToError from '@/common/error/await-to-error';
+} from "@nestjs/common";
+import { comparePassword, hashPassword } from "@/common/hash/password";
+import { JwtTokenService } from "@/common/jwt/jwt-token.service";
+import RegisterRequest from "@/auth/application/rest/request/register.request";
+import LoginRequest from "@/auth/application/rest/request/login.request";
+import UserRepository from "@/auth/infrastructure/repository/user/user.repository";
+import { UserEntity } from "@/auth/infrastructure/repository/user/user.entity";
+import { UserRole } from "@/auth/domain/types/user-role.enum";
+import { UserStatus } from "@/auth/domain/types/user-status.enum";
+import awaitToError from "@/common/error/await-to-error";
 
 export interface RegisterResponse {
   user: UserEntity;
@@ -39,7 +39,7 @@ export default class AuthService {
     // Check if email already exists
     const existingUser = await this.userRepository.findByEmail(request.email);
     if (existingUser) {
-      throw new ConflictException('Email sudah terdaftar');
+      throw new ConflictException("Email sudah terdaftar");
     }
 
     const passwordHash = await hashPassword(request.password);
@@ -58,7 +58,7 @@ export default class AuthService {
       this.userRepository.repository.save(user),
     );
     if (err || !savedUser) {
-      throw new BadRequestException('Gagal mendaftarkan pengguna');
+      throw new BadRequestException("Gagal mendaftarkan pengguna");
     }
 
     const tokenResult = this.jwtTokenService.generateAccessToken({
@@ -76,11 +76,11 @@ export default class AuthService {
   async login(request: LoginRequest): Promise<LoginResponse> {
     const user = await this.userRepository.findByEmail(request.email);
     if (!user) {
-      throw new UnauthorizedException('Email atau password tidak valid');
+      throw new UnauthorizedException("Email atau password tidak valid");
     }
 
     if (user.status === UserStatus.SUSPENDED) {
-      throw new UnauthorizedException('Akun Anda telah dinonaktifkan');
+      throw new UnauthorizedException("Akun Anda telah dinonaktifkan");
     }
 
     const isPasswordValid = await comparePassword(
@@ -88,7 +88,7 @@ export default class AuthService {
       user.passwordHash,
     );
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Email atau password tidak valid');
+      throw new UnauthorizedException("Email atau password tidak valid");
     }
 
     // Update last login

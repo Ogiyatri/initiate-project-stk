@@ -3,9 +3,9 @@ import {
   Catch,
   ArgumentsHost,
   HttpStatus,
-} from '@nestjs/common';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { QueryFailedError } from 'typeorm';
+} from "@nestjs/common";
+import { FastifyReply, FastifyRequest } from "fastify";
+import { QueryFailedError } from "typeorm";
 
 @Catch(QueryFailedError)
 export class DatabaseExceptionFilter implements ExceptionFilter {
@@ -15,36 +15,36 @@ export class DatabaseExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<FastifyRequest>();
 
     // Skip auth module
-    if (request.url.includes('/auth/')) {
+    if (request.url.includes("/auth/")) {
       throw exception;
     }
 
     const driverError = exception.driverError as any;
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = 'Internal server error';
+    let message = "Internal server error";
 
     // Postgres Foreign Key Violation
-    if (driverError?.code === '23503') {
+    if (driverError?.code === "23503") {
       status = HttpStatus.BAD_REQUEST;
       message = driverError.detail
         ? this.formatForeignKeyMessage(driverError.detail)
-        : 'Data referensi yang dimasukkan tidak ditemukan di sistem.';
+        : "Data referensi yang dimasukkan tidak ditemukan di sistem.";
     }
 
     // Postgres Unique Violation
-    if (driverError?.code === '23505') {
+    if (driverError?.code === "23505") {
       status = HttpStatus.CONFLICT;
       message = driverError.detail
         ? this.formatUniqueMessage(driverError.detail)
-        : 'Data yang dikirimkan sudah ada di sistem.';
+        : "Data yang dikirimkan sudah ada di sistem.";
     }
 
     // Postgres Not Null Violation
-    if (driverError?.code === '23502') {
+    if (driverError?.code === "23502") {
       status = HttpStatus.BAD_REQUEST;
       message = driverError.column
         ? `Kolom '${driverError.column}' tidak boleh kosong.`
-        : 'Terdapat kolom wajib yang belum diisi.';
+        : "Terdapat kolom wajib yang belum diisi.";
     }
 
     void response.status(status).send({
@@ -60,7 +60,7 @@ export class DatabaseExceptionFilter implements ExceptionFilter {
     if (match) {
       return `Referensi '${match[1]}' dengan nilai '${match[2]}' tidak ditemukan.`;
     }
-    return 'Data referensi tidak ditemukan di sistem.';
+    return "Data referensi tidak ditemukan di sistem.";
   }
 
   private formatUniqueMessage(detail: string): string {
@@ -68,6 +68,6 @@ export class DatabaseExceptionFilter implements ExceptionFilter {
     if (match) {
       return `Data dengan ${match[1]} '${match[2]}' sudah ada di sistem.`;
     }
-    return 'Data yang dikirimkan sudah ada di sistem.';
+    return "Data yang dikirimkan sudah ada di sistem.";
   }
 }

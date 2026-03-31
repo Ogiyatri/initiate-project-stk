@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from "@nestjs/common";
 import {
   ObjectLiteral,
   Repository,
@@ -6,8 +6,8 @@ import {
   QueryFailedError,
   type EntityTarget,
   FindOptionsWhere,
-} from 'typeorm';
-import awaitToError from '@/common/error/await-to-error';
+} from "typeorm";
+import awaitToError from "@/common/error/await-to-error";
 
 export interface BaseEntityInterface<TId = string> extends ObjectLiteral {
   id: TId;
@@ -53,6 +53,8 @@ export default class BaseRepository<TEntity extends BaseEntityInterface> {
   }
 
   async isExists(id: string) {
-    return this.repository.exists({ where: { id } as FindOptionsWhere<TEntity> });
+    return this.repository.exists({
+      where: { id } as FindOptionsWhere<TEntity>,
+    });
   }
 }

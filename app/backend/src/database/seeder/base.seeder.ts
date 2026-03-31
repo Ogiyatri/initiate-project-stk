@@ -1,5 +1,5 @@
-import { Logger } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { Logger } from "@nestjs/common";
+import { DataSource } from "typeorm";
 
 export abstract class BaseSeeder {
   protected logger: Logger;

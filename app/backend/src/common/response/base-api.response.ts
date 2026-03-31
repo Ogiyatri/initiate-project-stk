@@ -1,10 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 
 export class BaseApiResponse<T = undefined> {
-  @ApiProperty({ description: 'Response message', example: 'Success' })
+  @ApiProperty({ description: "Response message", example: "Success" })
   message: string;
 
-  @ApiProperty({ description: 'Response data', nullable: true })
+  @ApiProperty({ description: "Response data", nullable: true })
   data?: T;
 
   constructor(message: string, data?: T) {

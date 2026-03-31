@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService as NestConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService as NestConfigService } from "@nestjs/config";
 
 interface DatabaseConfig {
   port: number;
@@ -46,22 +46,22 @@ export default class ConfigService {
 
   database(): DatabaseConfig {
     return {
-      port: this.config.get<number>('DB_PORT') ?? 5432,
-      host: this.config.get<string>('DB_HOST') ?? 'localhost',
-      database: this.config.get<string>('DB_NAME') ?? 'stk_db',
-      username: this.config.get<string>('DB_USERNAME') ?? 'stk_user',
-      password: this.config.get<string>('DB_PASSWORD') ?? 'stk_password',
-      maxPool: this.config.get<number>('DB_MAX_POOL') ?? 10,
+      port: this.config.get<number>("DB_PORT") ?? 5432,
+      host: this.config.get<string>("DB_HOST") ?? "localhost",
+      database: this.config.get<string>("DB_NAME") ?? "stk_db",
+      username: this.config.get<string>("DB_USERNAME") ?? "stk_user",
+      password: this.config.get<string>("DB_PASSWORD") ?? "stk_password",
+      maxPool: this.config.get<number>("DB_MAX_POOL") ?? 10,
     };
   }
 
   app(): AppConfig {
     return {
-      port: this.config.get<number>('PORT') ?? 3000,
-      name: this.config.get<string>('APP_NAME') ?? 'stk-backend',
-      corsOrigin: this.config.get<string>('CORS_ORIGIN')?.split(',') ?? [
-        'http://localhost:3000',
-        'http://localhost:3001',
+      port: this.config.get<number>("PORT") ?? 3000,
+      name: this.config.get<string>("APP_NAME") ?? "stk-backend",
+      corsOrigin: this.config.get<string>("CORS_ORIGIN")?.split(",") ?? [
+        "http://localhost:3000",
+        "http://localhost:3001",
       ],
     };
   }
@@ -69,9 +69,9 @@ export default class ConfigService {
   jwt(): JwtConfig {
     return {
       secret:
-        this.config.get<string>('JWT_SECRET') ?? 'your-secret-key-change-this',
+        this.config.get<string>("JWT_SECRET") ?? "your-secret-key-change-this",
       expiresIn: Number.parseInt(
-        this.config.get<string>('JWT_EXPIRES_IN') || '86400',
+        this.config.get<string>("JWT_EXPIRES_IN") || "86400",
         10,
       ),
     };
@@ -80,12 +80,12 @@ export default class ConfigService {
   seeder(): SeederConfig {
     return {
       superAdmin: {
-        email: this.config.get<string>('SUPER_ADMIN_EMAIL') ?? 'admin@stk.id',
+        email: this.config.get<string>("SUPER_ADMIN_EMAIL") ?? "admin@stk.id",
         password:
-          this.config.get<string>('SUPER_ADMIN_PASSWORD') ?? 'Admin@123',
+          this.config.get<string>("SUPER_ADMIN_PASSWORD") ?? "Admin@123",
         name:
-          this.config.get<string>('SUPER_ADMIN_NAME') ?? 'Super Administrator',
-        phone: this.config.get<string>('SUPER_ADMIN_PHONE') ?? '081234567890',
+          this.config.get<string>("SUPER_ADMIN_NAME") ?? "Super Administrator",
+        phone: this.config.get<string>("SUPER_ADMIN_PHONE") ?? "081234567890",
       },
     };
   }
@@ -93,13 +93,13 @@ export default class ConfigService {
   multipart(): MultipartConfig {
     return {
       fileSize:
-        this.config.get<number>('MULTIPART_FILE_SIZE_LIMIT') ?? 10000000,
-      files: this.config.get<number>('MULTIPART_FILES_LIMIT') ?? 10,
+        this.config.get<number>("MULTIPART_FILE_SIZE_LIMIT") ?? 10000000,
+      files: this.config.get<number>("MULTIPART_FILES_LIMIT") ?? 10,
       fieldNameSize:
-        this.config.get<number>('MULTIPART_FIELD_NAME_SIZE_LIMIT') ?? 100,
+        this.config.get<number>("MULTIPART_FIELD_NAME_SIZE_LIMIT") ?? 100,
       fieldSize:
-        this.config.get<number>('MULTIPART_FIELD_SIZE_LIMIT') ?? 1000000,
-      fields: this.config.get<number>('MULTIPART_FIELDS_LIMIT') ?? 100,
+        this.config.get<number>("MULTIPART_FIELD_SIZE_LIMIT") ?? 1000000,
+      fields: this.config.get<number>("MULTIPART_FIELDS_LIMIT") ?? 100,
     };
   }
 }

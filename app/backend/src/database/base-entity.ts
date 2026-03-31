@@ -1,13 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
 export default class BaseEntity {
-  @ApiProperty({ description: 'Unique identifier', format: 'uuid' })
-  @PrimaryGeneratedColumn('uuid')
+  @ApiProperty({ description: "Unique identifier", format: "uuid" })
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   setId(id: string) {
@@ -15,8 +15,12 @@ export default class BaseEntity {
     return this;
   }
 
-  @ApiProperty({ description: 'Creation timestamp', type: 'string', format: 'date-time' })
-  @CreateDateColumn({ name: 'created_at' })
+  @ApiProperty({
+    description: "Creation timestamp",
+    type: "string",
+    format: "date-time",
+  })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
   setCreatedAt(createdAt: Date) {
@@ -24,8 +28,12 @@ export default class BaseEntity {
     return this;
   }
 
-  @ApiProperty({ description: 'Last update timestamp', type: 'string', format: 'date-time' })
-  @UpdateDateColumn({ name: 'updated_at' })
+  @ApiProperty({
+    description: "Last update timestamp",
+    type: "string",
+    format: "date-time",
+  })
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
   setUpdatedAt(updatedAt: Date) {

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import ConfigService from '@/config/config.service';
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import ConfigService from "@/config/config.service";
 
 export interface TokenPayload {
   sub: string;
@@ -25,7 +25,7 @@ export class JwtTokenService {
     const accessToken = this.jwtService.sign(payload);
     return {
       accessToken,
-      tokenType: 'Bearer',
+      tokenType: "Bearer",
       expiresIn: this.configService.jwt().expiresIn,
     };
   }

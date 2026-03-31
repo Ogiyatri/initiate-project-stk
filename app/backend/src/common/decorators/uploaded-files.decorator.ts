@@ -1,5 +1,5 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { MultipartFile } from '../interfaces/multipart-file.interface';
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { MultipartFile } from "../interfaces/multipart-file.interface";
 
 interface RequestWithFiles {
   incomingFiles?: Record<string, MultipartFile[]>;

@@ -1,7 +1,7 @@
-import ConfigService from '@/config/config.service';
-import { DataSource } from 'typeorm';
+import ConfigService from "@/config/config.service";
+import { DataSource } from "typeorm";
 
-export const DATA_SOURCE_KEY = 'DATA_SOURCE';
+export const DATA_SOURCE_KEY = "DATA_SOURCE";
 
 export const databaseProviders = [
   {
@@ -9,16 +9,16 @@ export const databaseProviders = [
     useFactory: async (configService: ConfigService) => {
       const dbConfig = configService.database();
       const dataSource = new DataSource({
-        type: 'postgres',
+        type: "postgres",
         host: dbConfig.host,
         port: dbConfig.port,
         username: dbConfig.username,
         password: dbConfig.password,
         database: dbConfig.database,
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        entities: [__dirname + "/../**/*.entity{.ts,.js}"],
         poolSize: dbConfig.maxPool,
         synchronize: false,
-        migrations: [__dirname + '/migration/*{.ts,.js}'],
+        migrations: [__dirname + "/migration/*{.ts,.js}"],
       });
       return dataSource.initialize();
     },

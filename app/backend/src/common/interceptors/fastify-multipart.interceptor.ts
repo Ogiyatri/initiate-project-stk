@@ -4,11 +4,11 @@ import {
   Injectable,
   NestInterceptor,
   BadRequestException,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { MultipartFile } from '../interfaces/multipart-file.interface';
-import { FastifyRequest } from 'fastify';
-import awaitToError from '@/common/error/await-to-error';
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { MultipartFile } from "../interfaces/multipart-file.interface";
+import { FastifyRequest } from "fastify";
+import awaitToError from "@/common/error/await-to-error";
 
 interface ExtendedRequest extends FastifyRequest {
   incomingFiles?: Record<string, MultipartFile[]>;
@@ -24,7 +24,7 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest<ExtendedRequest>();
 
-    if (typeof request.isMultipart !== 'function' || !request.isMultipart()) {
+    if (typeof request.isMultipart !== "function" || !request.isMultipart()) {
       return next.handle();
     }
 
@@ -33,10 +33,12 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
 
     const parts = request.parts();
     for await (const part of parts) {
-      if (part.type === 'file') {
+      if (part.type === "file") {
         const [err, buffer] = await awaitToError((part as any).toBuffer());
         if (err) {
-          throw new BadRequestException(`Failed to read file: ${(err as Error).message}`);
+          throw new BadRequestException(
+            `Failed to read file: ${(err as Error).message}`,
+          );
         }
         const file: MultipartFile = {
           buffer: buffer as Buffer,
@@ -49,7 +51,7 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
           files[part.fieldname] = [];
         }
         files[part.fieldname].push(file);
-      } else if (part.type === 'field') {
+      } else if (part.type === "field") {
         const body = request.body as Record<string, any>;
         const value = (part as any).value as unknown;
         body[part.fieldname] = this.tryParseJson(value);
@@ -61,7 +63,7 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
   }
 
   private tryParseJson(value: unknown): unknown {
-    if (typeof value !== 'string') return value;
+    if (typeof value !== "string") return value;
     try {
       return JSON.parse(value);
     } catch {

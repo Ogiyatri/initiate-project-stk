@@ -1,9 +1,9 @@
-import { Module, Global, DynamicModule, Type } from '@nestjs/common';
+import { Module, Global, DynamicModule, Type } from "@nestjs/common";
 import {
   ConfigModule as NestConfigModule,
   ConfigService as NestConfigService,
-} from '@nestjs/config';
-import ConfigService from './config.service';
+} from "@nestjs/config";
+import ConfigService from "./config.service";
 
 @Global()
 @Module({
@@ -12,7 +12,7 @@ import ConfigService from './config.service';
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['build/docker/.env'],
+      envFilePath: ["build/docker/.env"],
     }),
   ],
 })

@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import BaseRepository from '@/database/base-repository';
-import { DATA_SOURCE_KEY } from '@/database/provider';
-import { DataSource } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { Inject, Injectable } from "@nestjs/common";
+import BaseRepository from "@/database/base-repository";
+import { DATA_SOURCE_KEY } from "@/database/provider";
+import { DataSource } from "typeorm";
+import { UserEntity } from "./user.entity";
 
 @Injectable()
 export default class UserRepository extends BaseRepository<UserEntity> {
@@ -14,16 +14,16 @@ export default class UserRepository extends BaseRepository<UserEntity> {
     return this.repository.findOne({
       where: { email },
       select: [
-        'id',
-        'email',
-        'passwordHash',
-        'fullName',
-        'phone',
-        'role',
-        'status',
-        'lastLoginAt',
-        'createdAt',
-        'updatedAt',
+        "id",
+        "email",
+        "passwordHash",
+        "fullName",
+        "phone",
+        "role",
+        "status",
+        "lastLoginAt",
+        "createdAt",
+        "updatedAt",
       ],
     });
   }
