@@ -25,11 +25,18 @@ export function ThemeProvider({
   storageKey = "stk-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(storageKey) as Theme | null;
+      if (stored) return stored;
+    }
+    return defaultTheme;
+  });
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey) as Theme | null;
-    if (stored) setTheme(stored);
+    if (stored && stored !== theme) setTheme(stored);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   useEffect(() => {

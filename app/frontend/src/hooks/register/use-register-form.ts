@@ -27,6 +27,7 @@ export function useRegisterForm() {
 
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
     const { confirmPassword: _confirm, ...payload } = data;
+    void _confirm;
     register(payload, {
       onSuccess: (result) => {
         setUser(result.user as Parameters<typeof setUser>[0]);
