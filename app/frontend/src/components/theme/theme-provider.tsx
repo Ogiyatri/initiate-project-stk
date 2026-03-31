@@ -26,7 +26,7 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const stored = localStorage.getItem(storageKey) as Theme | null;
       if (stored) return stored;
     }
