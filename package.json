@@ -1,0 +1,32 @@
+{
+  "name": "stk-app",
+  "version": "1.0.0",
+  "description": "STK Fullstack Application",
+  "main": "app/backend/dist/main.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "install:dependencies": "yarn backend && yarn frontend",
+    "backend": "cd app/backend && yarn",
+    "frontend": "cd app/frontend && yarn",
+    "start:backend:dev": "cd app/backend && yarn start:dev",
+    "start:frontend:dev": "cd app/frontend && yarn dev",
+    "build:backend": "cd app/backend && yarn build",
+    "build:frontend": "cd app/frontend && yarn build",
+    "docker:backend": "cd app/backend && yarn dc",
+    "docker:backend:build": "cd app/backend && yarn dc build app",
+    "docker:backend:up": "cd app/backend && yarn dc:up",
+    "docker:backend:down": "cd app/backend && yarn dc down",
+    "docker:backend:logs": "cd app/backend && yarn dc:logs",
+    "docker:backend:migration:generate": "cd app/backend && yarn dc:migration:generate",
+    "docker:backend:migration:run": "cd app/backend && yarn dc:migration:run",
+    "docker:backend:seeder:run": "cd app/backend && yarn dc:seeder:run",
+    "docker:frontend:build": "cd app/frontend && docker compose -f build/docker/docker-compose.yml build",
+    "docker:frontend:up": "cd app/frontend && docker compose -f build/docker/docker-compose.yml up -d",
+    "docker:frontend:down": "cd app/frontend && docker compose -f build/docker/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

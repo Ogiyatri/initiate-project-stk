@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.next/
+.env
+.env.local
+*.log
+coverage/
+.DS_Store
+*.js.map
+yarn-error.log
+
+# Docker volumes
+**/volumes/
+**/postgres_data/

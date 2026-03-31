@@ -1,0 +1,62 @@
+services:
+  app:
+    image: productzilla/${APP_NAME}:latest
+    build:
+      context: ../../
+      dockerfile: build/docker/dockerfile
+    env_file:
+      - .env
+    ports:
+      - '${APP_PORT:-3000}:${APP_PORT:-3000}'
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '${DB_EXTERNAL_PORT:-5433}:5432'
+    volumes:
+      - ./volumes/postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME} -d ${DB_NAME}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - '${PGADMIN_PORT:-8081}:80'
+    volumes:
+      - ./volumes/pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+
+  db_prepare:
+    image: productzilla/${APP_NAME}:latest
+    build:
+      context: ../../
+      dockerfile: build/docker/dockerfile
+      target: base
+    working_dir: /app/backend
+    env_file:
+      - .env
+    volumes:
+      - ../../:/app/backend
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "yarn migration:run && yarn seeder:run"
+    restart: on-failure
+    networks:
+      default:
