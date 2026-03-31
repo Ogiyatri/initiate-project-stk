@@ -1,6 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import AuthController from "@/auth/application/rest/controller/auth.controller";
 import AuthService from "@/auth/domain/auth/auth.service";
+import RegisterRequest from "@/auth/application/rest/request/register.request";
+import LoginRequest from "@/auth/application/rest/request/login.request";
 import { UserRole } from "@/auth/domain/types/user-role.enum";
 import { UserStatus } from "@/auth/domain/types/user-status.enum";
 import { UserEntity } from "@/auth/infrastructure/repository/user/user.entity";
@@ -55,13 +57,13 @@ describe("AuthController", () => {
 
   describe("register", () => {
     it("should call authService.register and return result", async () => {
-      const request = {
+      const request = Object.assign(new RegisterRequest(), {
         email: "newuser@stk.id",
         password: "Password@123",
         fullName: "New User",
-      };
+      });
 
-      const result = await controller.register(request as any);
+      const result = await controller.register(request);
 
       expect(mockAuthService.register).toHaveBeenCalledWith(request);
       expect(result).toEqual({ user: mockUser, ...mockTokenResult });
@@ -70,12 +72,12 @@ describe("AuthController", () => {
 
   describe("login", () => {
     it("should call authService.login and return result", async () => {
-      const request = {
+      const request = Object.assign(new LoginRequest(), {
         email: "user@stk.id",
         password: "Password@123",
-      };
+      });
 
-      const result = await controller.login(request as any);
+      const result = await controller.login(request);
 
       expect(mockAuthService.login).toHaveBeenCalledWith(request);
       expect(result).toEqual({ user: mockUser, ...mockTokenResult });

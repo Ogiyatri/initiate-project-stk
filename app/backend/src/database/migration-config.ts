@@ -47,7 +47,7 @@ ${sql.downQueries
   if (error) {
     console.warn(
       "Failed to set permissions for migration file:",
-      (error as Error).message,
+      error.message,
     );
   }
 }

@@ -27,7 +27,7 @@ export class SeederService {
     const seeder = new SuperAdminSeeder(this.dataSource, this.configService);
     const [err] = await awaitToError(seeder.run());
     if (err) {
-      this.logger.error(`Seeder failed: ${(err as Error).message}`);
+      this.logger.error(`Seeder failed: ${err.message}`);
       throw err;
     }
     this.logger.log("✅ Super admin seeding completed!");
@@ -36,16 +36,16 @@ export class SeederService {
   async seedAll(names?: string[]): Promise<void> {
     const isFiltered = names && names.length > 0;
     this.logger.log(
-      `🌱 Starting database seeding${isFiltered ? ` for: ${names!.join(", ")}` : ""}...`,
+      `🌱 Starting database seeding${isFiltered ? ` for: ${names.join(", ")}` : ""}...`,
     );
 
     let seeders: BaseSeeder[];
     if (isFiltered) {
       seeders = this.getSeeders().filter((s) =>
-        names!.includes(s.constructor.name),
+        names.includes(s.constructor.name),
       );
       if (seeders.length === 0) {
-        this.logger.error(`No seeders found for: ${names!.join(", ")}`);
+        this.logger.error(`No seeders found for: ${names.join(", ")}`);
         return;
       }
     } else {
@@ -56,7 +56,7 @@ export class SeederService {
       const [err] = await awaitToError(seeder.run());
       if (err) {
         this.logger.error(
-          `Seeder ${seeder.constructor.name} failed: ${(err as Error).message}`,
+          `Seeder ${seeder.constructor.name} failed: ${err.message}`,
         );
         throw err;
       }

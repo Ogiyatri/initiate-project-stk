@@ -7,6 +7,12 @@ import {
 import { FastifyReply, FastifyRequest } from "fastify";
 import { QueryFailedError } from "typeorm";
 
+interface PostgresDriverError {
+  code: string;
+  detail?: string;
+  column?: string;
+}
+
 @Catch(QueryFailedError)
 export class DatabaseExceptionFilter implements ExceptionFilter {
   catch(exception: QueryFailedError, host: ArgumentsHost) {
@@ -19,7 +25,7 @@ export class DatabaseExceptionFilter implements ExceptionFilter {
       throw exception;
     }
 
-    const driverError = exception.driverError as any;
+    const driverError = exception.driverError as unknown as PostgresDriverError;
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = "Internal server error";
 

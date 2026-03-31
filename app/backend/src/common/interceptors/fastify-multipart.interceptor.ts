@@ -10,9 +10,23 @@ import { MultipartFile } from "../interfaces/multipart-file.interface";
 import { FastifyRequest } from "fastify";
 import awaitToError from "@/common/error/await-to-error";
 
+interface MultipartFilePart {
+  type: "file";
+  fieldname: string;
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  toBuffer: () => Promise<Buffer>;
+}
+
+interface MultipartFieldPart {
+  type: "field";
+  fieldname: string;
+  value: unknown;
+}
+
 interface ExtendedRequest extends FastifyRequest {
   incomingFiles?: Record<string, MultipartFile[]>;
-  body: any;
 }
 
 @Injectable()
@@ -20,7 +34,7 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Promise<Observable<any>> {
+  ): Promise<Observable<unknown>> {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest<ExtendedRequest>();
 
@@ -34,27 +48,26 @@ export class FastifyMultipartInterceptor implements NestInterceptor {
     const parts = request.parts();
     for await (const part of parts) {
       if (part.type === "file") {
-        const [err, buffer] = await awaitToError((part as any).toBuffer());
+        const filePart = part as unknown as MultipartFilePart;
+        const [err, buffer] = await awaitToError(filePart.toBuffer());
         if (err) {
-          throw new BadRequestException(
-            `Failed to read file: ${(err as Error).message}`,
-          );
+          throw new BadRequestException(`Failed to read file: ${err.message}`);
         }
         const file: MultipartFile = {
-          buffer: buffer as Buffer,
-          filename: (part as any).filename,
-          mimetype: (part as any).mimetype,
-          fieldname: part.fieldname,
-          encoding: (part as any).encoding,
+          buffer: buffer,
+          filename: filePart.filename,
+          mimetype: filePart.mimetype,
+          fieldname: filePart.fieldname,
+          encoding: filePart.encoding,
         };
-        if (!files[part.fieldname]) {
-          files[part.fieldname] = [];
+        if (!files[filePart.fieldname]) {
+          files[filePart.fieldname] = [];
         }
-        files[part.fieldname].push(file);
+        files[filePart.fieldname].push(file);
       } else if (part.type === "field") {
-        const body = request.body as Record<string, any>;
-        const value = (part as any).value as unknown;
-        body[part.fieldname] = this.tryParseJson(value);
+        const body = request.body as Record<string, unknown>;
+        const fieldPart = part as unknown as MultipartFieldPart;
+        body[fieldPart.fieldname] = this.tryParseJson(fieldPart.value);
       }
     }
 

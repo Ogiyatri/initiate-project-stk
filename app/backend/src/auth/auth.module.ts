@@ -15,7 +15,7 @@ import AuthController from "@/auth/application/rest/controller/auth.controller";
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secret: configService.jwt().secret,
         signOptions: {
           expiresIn: configService.jwt().expiresIn,

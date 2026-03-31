@@ -103,7 +103,8 @@ export default class AuthService {
     });
 
     // Remove passwordHash from response
-    const { passwordHash: _, ...userWithoutPassword } = user as any;
+    const { passwordHash: _omit, ...userWithoutPassword } =
+      user as UserEntity & { passwordHash: string };
 
     return {
       user: userWithoutPassword as UserEntity,
