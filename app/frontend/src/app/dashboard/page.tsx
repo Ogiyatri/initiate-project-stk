@@ -1,3 +1,5 @@
+'use client';
+
 import { useLogout } from '@/hooks/login/use-logout';
 import { useAuthStore } from '@/stores/auth';
 import { Button } from '@/components/ui/button';
