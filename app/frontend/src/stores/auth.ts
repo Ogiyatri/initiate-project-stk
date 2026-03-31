@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { User } from '@/types/login';
+import { create } from "zustand";
+import { User } from "@/types/login";
 
-export const SESSION_COOKIE_NAME = 'accessToken';
+export const SESSION_COOKIE_NAME = "accessToken";
 
 interface AuthState {
   user: User | null;
@@ -13,13 +13,13 @@ interface AuthState {
 }
 
 function setCookie(name: string, value: string, days = 7): void {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
 }
 
 function deleteCookie(name: string): void {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
@@ -32,12 +32,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   setAccessToken: (token) => {
     if (token) {
       setCookie(SESSION_COOKIE_NAME, token);
-      if (typeof localStorage !== 'undefined') {
+      if (typeof localStorage !== "undefined") {
         localStorage.setItem(SESSION_COOKIE_NAME, token);
       }
     } else {
       deleteCookie(SESSION_COOKIE_NAME);
-      if (typeof localStorage !== 'undefined') {
+      if (typeof localStorage !== "undefined") {
         localStorage.removeItem(SESSION_COOKIE_NAME);
       }
     }
@@ -46,17 +46,17 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: () => {
     deleteCookie(SESSION_COOKIE_NAME);
-    if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== "undefined") {
       localStorage.removeItem(SESSION_COOKIE_NAME);
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
     }
     set({ user: null, accessToken: null });
   },
 
   initializeFromStorage: () => {
-    if (typeof localStorage === 'undefined') return;
+    if (typeof localStorage === "undefined") return;
     const token = localStorage.getItem(SESSION_COOKIE_NAME);
-    const userStr = localStorage.getItem('user');
+    const userStr = localStorage.getItem("user");
     const user = userStr ? (JSON.parse(userStr) as User) : null;
     if (token) {
       setCookie(SESSION_COOKIE_NAME, token);

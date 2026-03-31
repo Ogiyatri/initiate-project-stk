@@ -1,18 +1,18 @@
-import axios, { AxiosError } from 'axios';
-import config from '@/lib/config';
+import axios, { AxiosError } from "axios";
+import config from "@/lib/config";
 
-const SESSION_COOKIE_NAME = 'accessToken';
+const SESSION_COOKIE_NAME = "accessToken";
 
 function getCookieValue(name: string): string | null {
-  if (typeof document === 'undefined') return null;
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
   return match ? match[2] : null;
 }
 
 export const apiClient = axios.create({
   baseURL: config.urls.api,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -31,9 +31,9 @@ apiClient.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       // Clear cookies and redirect to login
-      if (typeof document !== 'undefined') {
+      if (typeof document !== "undefined") {
         document.cookie = `${SESSION_COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        window.location.href = '/login';
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);

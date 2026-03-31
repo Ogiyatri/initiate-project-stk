@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export const SESSION_COOKIE_NAME = 'accessToken';
+export const SESSION_COOKIE_NAME = "accessToken";
 
 // Routes accessible without authentication
-const PUBLIC_EXACT_ROUTES = ['/'];
-const PUBLIC_ROUTE_PREFIXES = ['/login', '/register'];
+const PUBLIC_EXACT_ROUTES = ["/"];
+const PUBLIC_ROUTE_PREFIXES = ["/login", "/register"];
 
 function isPublicRoute(pathname: string): boolean {
   if (PUBLIC_EXACT_ROUTES.includes(pathname)) return true;
@@ -18,13 +18,13 @@ export function proxy(request: NextRequest) {
 
   // Already authenticated, trying to access public routes → redirect to dashboard
   if (token && isPublicRoute(pathname)) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // Not authenticated, trying to access protected routes → redirect to login
   if (!token && !isPublicRoute(pathname)) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -40,6 +40,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|assets).*)',
+    "/((?!api|_next/static|_next/image|favicon.ico|assets).*)",
   ],
 };

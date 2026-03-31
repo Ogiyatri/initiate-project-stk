@@ -22,6 +22,7 @@ STK/
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js >= 18
 - Yarn
 - Docker & Docker Compose
@@ -52,6 +53,7 @@ yarn dev
 ## Available Accounts
 
 After running seeder:
+
 - **Super Admin**: `admin@stk.id` / `Admin@123`
 
 ## API Documentation

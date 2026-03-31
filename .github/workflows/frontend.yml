@@ -5,18 +5,18 @@ on:
     branches:
       - main
       - develop
-      - 'feature/**'
-      - 'fix/**'
-      - 'hotfix/**'
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
     paths:
-      - 'app/frontend/**'
-      - '.github/workflows/frontend.yml'
+      - "app/frontend/**"
+      - ".github/workflows/frontend.yml"
   pull_request:
     branches:
       - main
       - develop
     paths:
-      - 'app/frontend/**'
+      - "app/frontend/**"
 
 jobs:
   lint:
@@ -32,8 +32,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
           cache-dependency-path: app/frontend/yarn.lock
 
       - name: Install dependencies
@@ -62,8 +62,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
           cache-dependency-path: app/frontend/yarn.lock
 
       - name: Install dependencies

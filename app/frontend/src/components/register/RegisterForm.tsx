@@ -1,19 +1,27 @@
-import * as React from 'react';
-import { UseFormRegister, FieldErrors, SubmitHandler } from 'react-hook-form';
-import { RegisterFormData } from '@/domains/register/register-domain';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import * as React from "react";
+import { UseFormRegister, FieldErrors, SubmitHandler } from "react-hook-form";
+import { RegisterFormData } from "@/domains/register/register-domain";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface RegisterFormProps {
   register: UseFormRegister<RegisterFormData>;
-  handleSubmit: (onSubmit: SubmitHandler<RegisterFormData>) => (e: React.FormEvent) => void;
+  handleSubmit: (
+    onSubmit: SubmitHandler<RegisterFormData>,
+  ) => (e: React.FormEvent) => void;
   errors: FieldErrors<RegisterFormData>;
   isPending: boolean;
   onSubmit: SubmitHandler<RegisterFormData>;
 }
 
-export function RegisterForm({ register, handleSubmit, errors, isPending, onSubmit }: RegisterFormProps) {
+export function RegisterForm({
+  register,
+  handleSubmit,
+  errors,
+  isPending,
+  onSubmit,
+}: RegisterFormProps) {
   return (
     <div className="min-h-screen flex">
       {/* Left: Branding */}
@@ -40,11 +48,13 @@ export function RegisterForm({ register, handleSubmit, errors, isPending, onSubm
                 id="fullName"
                 type="text"
                 placeholder="Nama Lengkap"
-                {...register('fullName')}
-                className={errors.fullName ? 'border-destructive' : ''}
+                {...register("fullName")}
+                className={errors.fullName ? "border-destructive" : ""}
               />
               {errors.fullName && (
-                <p className="text-sm text-destructive">{errors.fullName.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.fullName.message}
+                </p>
               )}
             </div>
 
@@ -54,11 +64,13 @@ export function RegisterForm({ register, handleSubmit, errors, isPending, onSubm
                 id="email"
                 type="email"
                 placeholder="email@example.com"
-                {...register('email')}
-                className={errors.email ? 'border-destructive' : ''}
+                {...register("email")}
+                className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -68,7 +80,7 @@ export function RegisterForm({ register, handleSubmit, errors, isPending, onSubm
                 id="phone"
                 type="tel"
                 placeholder="+62 812 3456 7890"
-                {...register('phone')}
+                {...register("phone")}
               />
             </div>
 
@@ -78,11 +90,13 @@ export function RegisterForm({ register, handleSubmit, errors, isPending, onSubm
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register('password')}
-                className={errors.password ? 'border-destructive' : ''}
+                {...register("password")}
+                className={errors.password ? "border-destructive" : ""}
               />
               {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -92,22 +106,27 @@ export function RegisterForm({ register, handleSubmit, errors, isPending, onSubm
                 id="confirmPassword"
                 type="password"
                 placeholder="••••••••"
-                {...register('confirmPassword')}
-                className={errors.confirmPassword ? 'border-destructive' : ''}
+                {...register("confirmPassword")}
+                className={errors.confirmPassword ? "border-destructive" : ""}
               />
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
 
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? 'Mendaftar...' : 'Daftar'}
+              {isPending ? "Mendaftar..." : "Daftar"}
             </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Sudah punya akun?{' '}
-            <a href="/login" className="text-primary font-medium hover:underline">
+            Sudah punya akun?{" "}
+            <a
+              href="/login"
+              className="text-primary font-medium hover:underline"
+            >
               Masuk sekarang
             </a>
           </p>

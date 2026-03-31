@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRegister } from '@/api/use-auth';
-import { useAuthStore } from '@/stores/auth';
-import { registerSchema, RegisterFormData, formatRegisterError } from '@/domains/register/register-domain';
+import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegister } from "@/api/use-auth";
+import { useAuthStore } from "@/stores/auth";
+import {
+  registerSchema,
+  RegisterFormData,
+  formatRegisterError,
+} from "@/domains/register/register-domain";
 
 export function useRegisterForm() {
   const router = useRouter();
@@ -27,13 +31,13 @@ export function useRegisterForm() {
       onSuccess: (result) => {
         setUser(result.user as Parameters<typeof setUser>[0]);
         setAccessToken(result.accessToken);
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('user', JSON.stringify(result.user));
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(result.user));
         }
-        router.push('/dashboard');
+        router.push("/dashboard");
       },
       onError: (error) => {
-        setError('email', { message: formatRegisterError(error) });
+        setError("email", { message: formatRegisterError(error) });
       },
     });
   };

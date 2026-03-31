@@ -1,4 +1,4 @@
-import { User, UserRole, UserStatus } from '@/types/login';
+import { User, UserRole, UserStatus } from "@/types/login";
 
 export function hasRole(user: User | null, role: UserRole): boolean {
   return user?.role === role;
@@ -24,10 +24,10 @@ export function getRedirectPathByRole(role: UserRole): string {
   switch (role) {
     case UserRole.SUPER_ADMIN:
     case UserRole.ADMIN:
-      return '/dashboard';
+      return "/dashboard";
     case UserRole.USER:
-      return '/dashboard';
+      return "/dashboard";
     default:
-      return '/login';
+      return "/login";
   }
 }

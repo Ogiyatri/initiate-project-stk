@@ -1,19 +1,27 @@
-import * as React from 'react';
-import { UseFormRegister, FieldErrors, SubmitHandler } from 'react-hook-form';
-import { LoginFormData } from '@/domains/login/login-domain';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import * as React from "react";
+import { UseFormRegister, FieldErrors, SubmitHandler } from "react-hook-form";
+import { LoginFormData } from "@/domains/login/login-domain";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface LoginFormProps {
   register: UseFormRegister<LoginFormData>;
-  handleSubmit: (onSubmit: SubmitHandler<LoginFormData>) => (e: React.FormEvent) => void;
+  handleSubmit: (
+    onSubmit: SubmitHandler<LoginFormData>,
+  ) => (e: React.FormEvent) => void;
   errors: FieldErrors<LoginFormData>;
   isPending: boolean;
   onSubmit: SubmitHandler<LoginFormData>;
 }
 
-export function LoginForm({ register, handleSubmit, errors, isPending, onSubmit }: LoginFormProps) {
+export function LoginForm({
+  register,
+  handleSubmit,
+  errors,
+  isPending,
+  onSubmit,
+}: LoginFormProps) {
   return (
     <div className="min-h-screen flex">
       {/* Left: Branding */}
@@ -30,7 +38,9 @@ export function LoginForm({ register, handleSubmit, errors, isPending, onSubmit 
         <div className="w-full max-w-md">
           <div className="mb-8 text-center lg:text-left">
             <h2 className="text-3xl font-bold text-foreground">Masuk</h2>
-            <p className="text-muted-foreground mt-2">Masukkan email dan password Anda</p>
+            <p className="text-muted-foreground mt-2">
+              Masukkan email dan password Anda
+            </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -40,11 +50,13 @@ export function LoginForm({ register, handleSubmit, errors, isPending, onSubmit 
                 id="email"
                 type="email"
                 placeholder="admin@stk.id"
-                {...register('email')}
-                className={errors.email ? 'border-destructive' : ''}
+                {...register("email")}
+                className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -54,22 +66,27 @@ export function LoginForm({ register, handleSubmit, errors, isPending, onSubmit 
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register('password')}
-                className={errors.password ? 'border-destructive' : ''}
+                {...register("password")}
+                className={errors.password ? "border-destructive" : ""}
               />
               {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? 'Memuat...' : 'Masuk'}
+              {isPending ? "Memuat..." : "Masuk"}
             </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Belum punya akun?{' '}
-            <a href="/register" className="text-primary font-medium hover:underline">
+            Belum punya akun?{" "}
+            <a
+              href="/register"
+              className="text-primary font-medium hover:underline"
+            >
               Daftar sekarang
             </a>
           </p>

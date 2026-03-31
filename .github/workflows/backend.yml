@@ -5,18 +5,18 @@ on:
     branches:
       - main
       - develop
-      - 'feature/**'
-      - 'fix/**'
-      - 'hotfix/**'
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
     paths:
-      - 'app/backend/**'
-      - '.github/workflows/backend.yml'
+      - "app/backend/**"
+      - ".github/workflows/backend.yml"
   pull_request:
     branches:
       - main
       - develop
     paths:
-      - 'app/backend/**'
+      - "app/backend/**"
 
 jobs:
   lint:
@@ -32,8 +32,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
           cache-dependency-path: app/backend/yarn.lock
 
       - name: Install dependencies
@@ -71,7 +71,7 @@ jobs:
       DB_PASSWORD: stk_password
       DB_DATABASE: stk_db_test
       JWT_SECRET: test-secret-key
-      JWT_EXPIRES_IN: '86400'
+      JWT_EXPIRES_IN: "86400"
       APP_PORT: 3000
       APP_NAME: stk-test
 
@@ -82,8 +82,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
           cache-dependency-path: app/backend/yarn.lock
 
       - name: Install dependencies
@@ -113,8 +113,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
           cache-dependency-path: app/backend/yarn.lock
 
       - name: Install dependencies

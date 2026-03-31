@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useLogout } from '@/hooks/login/use-logout';
-import { useAuthStore } from '@/stores/auth';
-import { Button } from '@/components/ui/button';
+import { useLogout } from "@/hooks/login/use-logout";
+import { useAuthStore } from "@/stores/auth";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -25,25 +25,27 @@ export default function DashboardPage() {
           {user && (
             <div className="space-y-2 text-muted-foreground">
               <p>
-                <span className="font-medium text-foreground">Nama:</span> {user.fullName}
+                <span className="font-medium text-foreground">Nama:</span>{" "}
+                {user.fullName}
               </p>
               <p>
-                <span className="font-medium text-foreground">Email:</span> {user.email}
+                <span className="font-medium text-foreground">Email:</span>{" "}
+                {user.email}
               </p>
               <p>
-                <span className="font-medium text-foreground">Role:</span>{' '}
-                <span className="capitalize">{user.role.toLowerCase().replace('_', ' ')}</span>
+                <span className="font-medium text-foreground">Role:</span>{" "}
+                <span className="capitalize">
+                  {user.role.toLowerCase().replace("_", " ")}
+                </span>
               </p>
               <p>
-                <span className="font-medium text-foreground">Status:</span>{' '}
+                <span className="font-medium text-foreground">Status:</span>{" "}
                 <span
                   className={
-                    user.status === 'ACTIVE'
-                      ? 'text-green-600'
-                      : 'text-red-600'
+                    user.status === "ACTIVE" ? "text-green-600" : "text-red-600"
                   }
                 >
-                  {user.status === 'ACTIVE' ? 'Aktif' : 'Dinonaktifkan'}
+                  {user.status === "ACTIVE" ? "Aktif" : "Dinonaktifkan"}
                 </span>
               </p>
             </div>
