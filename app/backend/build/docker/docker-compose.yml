@@ -1,6 +1,6 @@
 services:
   app:
-    image: productzilla/${APP_NAME}:latest
+    image: malakiano/${APP_NAME}:latest
     build:
       context: ../../
       dockerfile: build/docker/dockerfile
@@ -43,7 +43,7 @@ services:
       - db
 
   db_prepare:
-    image: productzilla/${APP_NAME}:latest
+    image: malakiano/${APP_NAME}:latest
     build:
       context: ../../
       dockerfile: build/docker/dockerfile

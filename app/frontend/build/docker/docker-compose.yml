@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: productzilla/stk-frontend:latest
+    image: malakiano/stk-frontend:latest
     build:
       context: ../../
       dockerfile: build/docker/dockerfile
