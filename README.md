@@ -24,23 +24,31 @@ STK/
 ### Prerequisites
 
 - Node.js >= 18
-- Yarn
+- Yarn/Npm
 - Docker & Docker Compose
 
 ### Backend
 
 ```bash
 # Install dependencies
-cd app/backend && yarn
+cd app/backend && yarn or npm
 
 # Start with Docker (includes PostgreSQL)
-yarn dc:up
+# di directory backend (app/backend)
+yarn docker:backend:up or npm run docker:backend:up
+
+
+# di directory frontend (app/frontend)
+yarn docker:frontend:up or npm run docker:backend:down
+
+# cukup 2 diatas untuk menjalankan project backend dan frontend
 
 # Run migrations
-yarn dc:migration:run
+yarn dc:migration:run or npm run dc:migration:run
+
 
 # Run seeder (super admin)
-yarn dc:seeder:run
+yarn dc:seeder:run or npm run dc:seeder:run
 ```
 
 ### Frontend
