@@ -2,6 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class Migration1774959002799 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.query(
       "CREATE TYPE \"public\".\"users_role_enum\" AS ENUM('SUPER_ADMIN', 'ADMIN', 'USER')",
     );
@@ -14,8 +15,8 @@ export class Migration1774959002799 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE "users"');
     await queryRunner.query('DROP TYPE "public"."users_role_enum"');
     await queryRunner.query('DROP TYPE "public"."users_status_enum"');
-    await queryRunner.query('DROP TABLE "users"');
   }
 }

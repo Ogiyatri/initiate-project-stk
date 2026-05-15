@@ -1,4 +1,4 @@
-import { Module, Global, DynamicModule, Type } from "@nestjs/common";
+import { Module, Global, DynamicModule } from "@nestjs/common";
 import {
   ConfigModule as NestConfigModule,
   ConfigService as NestConfigService,
@@ -12,14 +12,12 @@ import ConfigService from "./config.service";
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ["build/docker/.env"],
+      envFilePath: [".env", "build/docker/.env"],
     }),
   ],
 })
-export default class ConfigModule implements DynamicModule {
-  module: Type<any>;
-
-  static forRoot() {
+export default class ConfigModule {
+  static forRoot(): DynamicModule {
     return {
       module: ConfigModule,
       exports: [ConfigService, NestConfigService],

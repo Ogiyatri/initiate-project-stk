@@ -58,6 +58,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("STK Backend API")
     .setDescription("API documentation for STK Application")
+    .setContact("Ogi", "Yatri Malakiano", "ogiyatrimalakiano@gmail.com")
     .setVersion("1.0")
     .addBearerAuth()
     .addTag("Authentication")

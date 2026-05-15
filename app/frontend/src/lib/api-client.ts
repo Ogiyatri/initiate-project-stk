@@ -25,9 +25,19 @@ apiClient.interceptors.request.use((requestConfig) => {
   return requestConfig;
 });
 
-// Response interceptor: handle 401 unauthorized
+// Response interceptor: unwrap BaseApiResponse { message, data } and handle 401
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (
+      response.data &&
+      typeof response.data === "object" &&
+      "data" in response.data &&
+      "message" in response.data
+    ) {
+      response.data = (response.data as { message: string; data: unknown }).data;
+    }
+    return response;
+  },
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       // Clear cookies and redirect to login

@@ -43,7 +43,6 @@ services:
       - db
 
   db_prepare:
-    image: malakiano/${APP_NAME}:latest
     build:
       context: ../../
       dockerfile: build/docker/dockerfile

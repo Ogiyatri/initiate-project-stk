@@ -1,6 +1,6 @@
 services:
   app:
-    image: productzilla/${APP_NAME}:local
+    image: malakiano/${APP_NAME}:local
     build:
       context: ../../
       dockerfile: build/docker/dockerfile
